@@ -1,9 +1,8 @@
-
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api.tutorialedge.net
+  name: comments-api
 spec:
   replicas: 3
   strategy:
@@ -13,15 +12,15 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      name: api.tutorialedge.net
+      name: comments-api
   template:
     metadata:
       labels:
-        name: api.tutorialedge.net
+        name: comments-api
     spec:
       containers:
       - name: application
-        image: "sikharin/comments-api:latest"
+        image: "forbsey/comments-api:latest"
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
@@ -36,3 +35,5 @@ spec:
             value: "$DB_TABLE"
           - name: DB_USERNAME
             value: "$DB_USERNAME"
+          - name: SSL_MODE
+            value: "require"
